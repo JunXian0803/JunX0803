@@ -1,0 +1,196 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign Up</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <link href="plugin/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="plugin/bootstrap/font-awesome.min.css" rel="stylesheet" />
+    <link href="Content/style.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="body">
+        <h1 id="main-heading">Create Account</h1>
+        <div class="container">
+            <div class="center">
+                <form id="signup-form">
+
+                    <!----- Step 1 ------>
+                   <!-- <div id="step1">
+
+                        <div class="txt_field">
+                            <input type="text" id="username" name="username" required>
+                            <span></span>
+                            <label>UserName</label>
+                        </div>
+                        
+                        <div class="input-button">
+                            <button id="btn-next-verification">Next</button>
+                        </div>
+
+                        <div class="login_link">
+                            Have an account? <a href="index.html">Log in </a>
+                        </div>
+                    </div> -->
+
+
+                    <!-----Step 2---->
+                    <div id="step2">
+                        <div class="txt_field">
+                            <input type="text" id="phone" name="phone" required>
+                            <span></span>
+                            <label>Phone Number</label>
+                        </div>
+                        <div class="input-button">
+                            <button id="btn-send-code">Send Verification Code</button>
+                        </div>
+
+                        <div class="login_link">
+                            Have an account? <a href="index.html">Log in </a>
+                        </div>
+
+                    </div>
+
+                    <!------Step 3---->
+                    <div id="step3" class="hidden">
+                        <div class="verification-message">
+                            We sent a code to <span id="verification-phone"></span>
+                        </div>
+                        <div class="code-inputs">
+                            <input type="text" maxlength="1" class="code-input" id="digit1">
+                            <input type="text" maxlength="1" class="code-input" id="digit2">
+                            <input type="text" maxlength="1" class="code-input" id="digit3">
+                            <input type="text" maxlength="1" class="code-input" id="digit4">
+                            <input type="text" maxlength="1" class="code-input" id="digit5">
+                            <input type="text" maxlength="1" class="code-input" id="digit6">
+                        </div>
+
+                        <div class="resend-container">
+                            <div class="resend-text">Didn't get the code?</div>
+
+                        </div>
+
+                        <div class="input-button-verification">
+                            <button type="button" button id="btn-resend-code">Resend</button>
+                            <button type="button" button id="btn-next-verified">Next</button>
+                        </div>
+                     
+                    </div>
+
+                    <!--Step4-->
+                    <div id="step4" class="hidden">
+                        <div class="txt_field">
+                            <input type="text" id="username" name="username" required>
+                            <span></span>
+                            <label>UserName</label>
+                        </div>
+
+                        <div class="txt_field">
+                            <input type="text" id="password" name="password" required>
+                            <span></span>
+                            <label>Password</label>
+                        </div>
+                        <div class="txt_field">
+                            <input type="text" id="confirmpassword" name="confirmpassword" required>
+                            <span></span>
+                            <label>Confirm Password</label>
+                        </div>
+                        <div class="input-button">
+                            <button type="button" id="btn-create-account">Create Profile</button>
+                        </div>
+
+                    </div>
+
+                    <!-- Step5 -->
+                    <div id="step5" class="hidden">
+                        <div class="logo-main">
+                            <img src= "Content/Image/images.png" class="img-responsive center-block" />
+                        </div>
+                        <div class="verification-successfull">
+                            Account successfully created
+                        </div>
+                        <div class="input-button">
+                            <button type="button" id="btn-home-page">Explore Home Page</button>
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+       /* document.getElementById('btn-next-verification').addEventListener('click', function () {
+
+            document.getElementById('main-heading').classList.add('hidden');
+
+            document.getElementById('username').removeAttribute('required');
+
+            document.getElementById('step1').classList.add('hidden');
+            document.getElementById('step2').classList.remove('hidden');
+
+            document.getElementById('phone').setAttribute('required', true);
+
+            
+        });*/
+
+        document.getElementById('btn-send-code').addEventListener('click', function () {
+
+            document.getElementById('main-heading').classList.add('hidden');
+
+            var phone = document.getElementById('phone').value;
+            document.getElementById('verification-phone').textContent = phone;
+
+            document.getElementById('phone').removeAttribute('required');
+
+            document.getElementById('step2').classList.add('hidden');
+            document.getElementById('step3').classList.remove('hidden');
+
+            document.querySelectorAll('.code-input').forEach(input => {
+            input.setAttribute('required', true);
+            });
+
+            
+        });
+
+        const inputs = document.querySelectorAll('.code-input');
+
+        inputs.forEach((input, index) => {
+            input.addEventListener('input', () => {
+                if (input.value.length === 1 && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+            });
+
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && input.value.length === 0 && index > 0) {
+                    inputs[index - 1].focus();
+                }
+            });
+        });
+
+        document.getElementById('btn-next-verified').addEventListener('click', function () {
+
+            document.getElementById('step3').classList.add('hidden');
+            document.getElementById('step4').classList.remove('hidden');
+        });
+
+        document.getElementById('btn-create-account').addEventListener('click', function () {
+
+            document.getElementById('step4').classList.add('hidden');
+            document.getElementById('step5').classList.remove('hidden');
+        });
+
+
+
+        document.getElementById('btn-home-page').addEventListener('click', function () {
+            window.location.href = 'index.html';
+        });
+
+    </script>
+
+</body>
+</html>
